@@ -4,6 +4,7 @@ const { deployStakingFixture } = require('../shared/fixtures')
 const { setRewardsRate } = require('./Staker/setRewardsRate')
 const { stake } = require('./Staker/stake')
 const { getRewards } = require('./Staker/getRewards')
+const { withdraw } = require('./Staker/withdraw')
 
 describe('Unit Test', async () => {
   before(async () => {
@@ -24,5 +25,6 @@ describe('Unit Test', async () => {
     setRewardsRate()
     stake()
     getRewards()
+    withdraw()
   })
 })
