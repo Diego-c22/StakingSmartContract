@@ -25,19 +25,19 @@ contract Staking is Ownable, ERC20 {
      * @dev Save reward tokens accumulated util the last time "updateRewards" was executed
      * Account => Amount of rewards token accumulated
      */
-    mapping(address => uint256) private _lastRewardsAmount;
+    mapping(address => uint256) internal _lastRewardsAmount;
 
     /**
-     * @dev Save amount of tokens staked for each account.
+     * @notice Save amount of tokens staked for each account.
      * Account => Amount of tokens staked.
      */
-    mapping(address => uint256) private _staked;
+    mapping(address => uint256) public staked;
 
     /**
      * @dev Save last time and account deposited tokens to stake.
      * Account => Timestamp
      */
-    mapping(address => uint256) private _lastUpdate;
+    mapping(address => uint256) internal _lastUpdate;
 
     /**
      * @notice Check if an account already has staked tokens, save and
@@ -46,7 +46,7 @@ contract Staking is Ownable, ERC20 {
      * @param address_ Address to update rewards
      */
     modifier updateRewards(address address_) {
-        if (_staked[address_] > 0) {
+        if (staked[address_] > 0) {
             unchecked {
                 _lastRewardsAmount[address_] = getRewards(address_);
             }
@@ -76,7 +76,7 @@ contract Staking is Ownable, ERC20 {
         uint256 startTime_
     ) private view returns (uint256) {
         uint256 timePassed = block.timestamp - startTime_;
-        return ((timePassed * rewardRate * 1e18) / 365 days);
+        return ((timePassed * rewardRate) / 365 days);
     }
 
     /**
@@ -89,7 +89,7 @@ contract Staking is Ownable, ERC20 {
     ) public view returns (uint256 rewards) {
         rewards =
             _lastRewardsAmount[address_] +
-            (_getRewardsPerToken(_lastUpdate[address_]) * _staked[address_]);
+            (_getRewardsPerToken(_lastUpdate[address_]) * staked[address_]);
     }
 
     /**
@@ -100,7 +100,7 @@ contract Staking is Ownable, ERC20 {
     function stake(uint256 amount_) external updateRewards(msg.sender) {
         stakingToken.transferFrom(msg.sender, address(this), amount_);
         unchecked {
-            _staked[msg.sender] += amount_;
+            staked[msg.sender] += amount_;
         }
 
         _lastUpdate[msg.sender] = block.timestamp;
@@ -125,8 +125,7 @@ contract Staking is Ownable, ERC20 {
      * @notice Withdraws all the tokens of the sender and mints all the rewards accumulated.
      */
     function claimAndWithdraw() external updateRewards(msg.sender) {
-        uint256 staked = _staked[msg.sender];
-        _withdraw(staked);
+        _withdraw(staked[msg.sender]);
         _claim();
     }
 
@@ -146,13 +145,12 @@ contract Staking is Ownable, ERC20 {
      * @param amount_ Amount of tokens to withdraw
      */
     function _withdraw(uint256 amount_) internal {
-        uint256 staked = _staked[msg.sender];
-        if (amount_ > staked) {
+        if (amount_ > staked[msg.sender]) {
             revert AmountExceedsBalance();
         }
 
         unchecked {
-            _staked[msg.sender] -= amount_;
+            staked[msg.sender] -= amount_;
         }
 
         _lastUpdate[msg.sender] = block.timestamp;
