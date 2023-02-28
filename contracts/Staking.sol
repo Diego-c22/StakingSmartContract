@@ -154,6 +154,7 @@ contract Staking is Ownable, ERC20 {
         }
 
         _lastUpdate[msg.sender] = block.timestamp;
+        stakingToken.transfer(msg.sender, amount_);
     }
 
     /**
