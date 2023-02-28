@@ -1,6 +1,7 @@
 const { loadFixture } = require('@nomicfoundation/hardhat-network-helpers')
 const { deploySystemFixture } = require('../shared/fixtures')
 const { claim } = require('./Staking/claim')
+const { claimAndWithdraw } = require('./Staking/claimAndWithdraw')
 const { stake } = require('./Staking/stake')
 const { withdraw } = require('./Staking/withdraw')
 
@@ -23,5 +24,6 @@ describe('Integration Test', async () => {
     stake()
     withdraw()
     claim()
+    claimAndWithdraw()
   })
 })
