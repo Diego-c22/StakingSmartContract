@@ -1,5 +1,7 @@
 require('@nomicfoundation/hardhat-toolbox')
 require('solidity-docgen')
+require('hardhat-exposed')
+
 require('dotenv').config({
   path: `./.env${process.env.ENV ? '.' + process.env.ENV : ''}`,
 })
@@ -38,16 +40,16 @@ module.exports = {
       url: URL_RPC_MAINNET,
       accounts: [DEPLOYER_WALLET_PRIVATE_KEY],
     },
-    hardhat: {
-      forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-      },
-    },
+    // hardhat: {
+    //   forking: {
+    //     url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+    //   },
+    // },
 
-    localhost: {
-      forking: {
-        url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
-      },
-    },
+    // localhost: {
+    //   forking: {
+    //     url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`,
+    //   },
+    // },
   },
 }
