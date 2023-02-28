@@ -3,10 +3,6 @@ const { ethers } = require('hardhat')
 
 exports.stake = () => {
   context('#stake', async () => {
-    beforeEach(async () => {
-      const stakeToken = globalThis.stakeToken
-      await stakeToken.getTokens()
-    })
     it('Should decrease user token balance', async () => {
       const stakingContract = globalThis.stakingContract
       const stakeToken = globalThis.stakeToken
