@@ -18,7 +18,16 @@ const deployStakeTokenFixture = async () => {
   return { stakeToken }
 }
 
+const deploySystemFixture = async () => {
+  const { stakeToken } = await deployStakeTokenFixture()
+  const StakingContract = await ethers.getContractFactory('Staking')
+  const stakingContract = await StakingContract.deploy(stakeToken.address, 2000)
+
+  return { stakingContract, stakeToken }
+}
+
 module.exports = {
   deployStakingFixture,
   deployStakeTokenFixture,
+  deploySystemFixture,
 }
