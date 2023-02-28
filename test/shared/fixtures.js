@@ -11,7 +11,7 @@ const deployStakingFixture = async () => {
   return { stakingContract, $stakingContract, erc20 }
 }
 
-const deployStakeToken = async () => {
+const deployStakeTokenFixture = async () => {
   const StakeToken = await ethers.getContractFactory('StakeToken')
   const stakeToken = await StakeToken.deploy()
 
@@ -20,5 +20,5 @@ const deployStakeToken = async () => {
 
 module.exports = {
   deployStakingFixture,
-  deployStakeToken,
+  deployStakeTokenFixture,
 }

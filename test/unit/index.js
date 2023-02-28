@@ -1,6 +1,9 @@
 const { ethers } = require('hardhat')
 const { loadFixture } = require('@nomicfoundation/hardhat-network-helpers')
-const { deployStakingFixture, deployStakeToken } = require('../shared/fixtures')
+const {
+  deployStakingFixture,
+  deployStakeTokenFixture,
+} = require('../shared/fixtures')
 const { setRewardsRate } = require('./Staking/setRewardsRate')
 const { stake } = require('./Staking/stake')
 const { getRewards } = require('./Staking/getRewards')
@@ -35,7 +38,7 @@ describe('Unit Test', async () => {
 
   describe('StakeToken Contract', async () => {
     beforeEach(async () => {
-      const { stakeToken } = await loadFixture(deployStakeToken)
+      const { stakeToken } = await loadFixture(deployStakeTokenFixture)
       globalThis.stakeToken = stakeToken
     })
 
