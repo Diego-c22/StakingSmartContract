@@ -1,12 +1,16 @@
 const { ethers } = require('hardhat')
 const { loadFixture } = require('@nomicfoundation/hardhat-network-helpers')
-const { deployStakingFixture } = require('../shared/fixtures')
-const { setRewardsRate } = require('./Staker/setRewardsRate')
-const { stake } = require('./Staker/stake')
-const { getRewards } = require('./Staker/getRewards')
-const { withdraw } = require('./Staker/withdraw')
-const { claim } = require('./Staker/claim')
-const { claimAndWithdraw } = require('./Staker/ClaimAndWithdraw')
+const {
+  deployStakingFixture,
+  deployStakeTokenFixture,
+} = require('../shared/fixtures')
+const { setRewardsRate } = require('./Staking/setRewardsRate')
+const { stake } = require('./Staking/stake')
+const { getRewards } = require('./Staking/getRewards')
+const { withdraw } = require('./Staking/withdraw')
+const { claim } = require('./Staking/claim')
+const { claimAndWithdraw } = require('./Staking/ClaimAndWithdraw')
+const { getTokens } = require('./StakeToken/getTokens')
 
 describe('Unit Test', async () => {
   before(async () => {
@@ -30,5 +34,14 @@ describe('Unit Test', async () => {
     withdraw()
     claim()
     claimAndWithdraw()
+  })
+
+  describe('StakeToken Contract', async () => {
+    beforeEach(async () => {
+      const { stakeToken } = await loadFixture(deployStakeTokenFixture)
+      globalThis.stakeToken = stakeToken
+    })
+
+    getTokens()
   })
 })

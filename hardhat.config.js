@@ -23,8 +23,8 @@ module.exports = {
 
   etherscan: {
     apiKey: {
-      goerli: API_KEY_SCAN,
-      // polygonMumbai: process.env.API_KEY_SCAN_POLYGON,
+      // goerli: API_KEY_SCAN,
+      polygonMumbai: process.env.API_KEY_SCAN,
     },
   },
   networks: {
