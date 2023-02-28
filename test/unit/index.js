@@ -6,6 +6,7 @@ const { stake } = require('./Staker/stake')
 const { getRewards } = require('./Staker/getRewards')
 const { withdraw } = require('./Staker/withdraw')
 const { claim } = require('./Staker/claim')
+const { claimAndWithdraw } = require('./Staker/ClaimAndWithdraw')
 
 describe('Unit Test', async () => {
   before(async () => {
@@ -28,5 +29,6 @@ describe('Unit Test', async () => {
     getRewards()
     withdraw()
     claim()
+    claimAndWithdraw()
   })
 })
